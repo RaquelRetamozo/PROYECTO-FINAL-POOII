@@ -3,6 +3,7 @@ package entidades;
 import java.time.LocalDate;
 
 public class ProductoLiquido extends Producto {
+
     //Atributos
     private double viscosidad;        // en cP
     private double temperaturaMaxima; // en °C

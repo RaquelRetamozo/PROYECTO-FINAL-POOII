@@ -2,6 +2,7 @@ package entidades;
 import java.time.LocalDate;
 
 public abstract class Producto {
+
     //Atributos
     private String idProducto;
     private String nombre;
