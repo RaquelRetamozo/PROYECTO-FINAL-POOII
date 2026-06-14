@@ -50,6 +50,6 @@ public class LecturaSensor {
                 " | Zona: " + zona.getNombre() +
                 " | Valor: " + valor +
                 " | Fecha: " + fechaHora +
-                " | Estado: " + (dentroRango ? "OK" : "⚠ FUERA DE RANGO");
+                " | Estado: " + (dentroRango ? "DENTRO DE RANGO" : " FUERA DE RANGO");
     }
 }
