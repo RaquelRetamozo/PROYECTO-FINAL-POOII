@@ -48,14 +48,4 @@ public class MovimientoInventario {
     public void setMotivo(String motivo) { this.motivo = motivo; }
     public void setResponsable(String responsable) { this.responsable = responsable; }
 
-    @Override
-    public String toString() {
-        return "Movimiento: " + idMovimiento +
-                " | Tipo: " + tipoMovimiento +
-                " | Lote: " + lote.getNumeroLote() +
-                " | Cant: " + cantidad +
-                " | Fecha: " + fechaHora +
-                " | Motivo: " + motivo +
-                " | Responsable: " + responsable;
-    }
 }

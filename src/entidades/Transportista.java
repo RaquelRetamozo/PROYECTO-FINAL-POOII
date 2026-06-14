@@ -80,10 +80,4 @@ public class Transportista {
         this.tipoVehiculo = tipoVehiculo;
     }
 
-    @Override
-    public String toString() {
-        return "Transportista: " + idTransportista + " | " + nombre +
-                " | DNI: " + dni + " | Licencia: " + licencia +
-                " | Placa: " + placa + " | Vehiculo: " + tipoVehiculo;
-    }
 }

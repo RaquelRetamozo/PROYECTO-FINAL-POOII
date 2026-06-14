@@ -40,11 +40,4 @@ public class LecturaTemperatura extends LecturaSensor {
     public void setTemperaturaMin(double temperaturaMin) { this.temperaturaMin = temperaturaMin; }
     public void setTemperaturaMax(double temperaturaMax) { this.temperaturaMax = temperaturaMax; }
 
-    //ToString
-    @Override
-    public String toString() {
-        return super.toString() +
-                " | Temp: " + temperaturaRegistrada + "°C" +
-                " | Rango: " + temperaturaMin + "°C - " + temperaturaMax + "°C";
-    }
 }

@@ -85,11 +85,4 @@ public class Lote {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-
-    //Metodo
-    public String toString() {
-        return "Lote: " + numeroLote + " | Producto: " + producto.getNombre() +
-                " | Cant: " + cantidad + " | Ingreso: " + fechaIngreso +
-                " | Estado: " + estado + " | Ubic: " + ubicacion;
-    }
 }

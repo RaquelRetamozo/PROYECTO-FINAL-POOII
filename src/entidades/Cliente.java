@@ -80,10 +80,4 @@ public class Cliente {
         this.contacto = contacto;
     }
 
-    @Override
-    public String toString() {
-        return "Cliente: " + idCliente + " | " + razonSocial +
-                " | RUC: " + ruc + " | Tel: " + telefono +
-                " | Contacto: " + contacto;
-    }
 }

@@ -39,10 +39,4 @@ public class ProductoPolvo extends Producto {
         this.humedadMaxima = humedadMaxima;
     }
 
-    //Metodo
-    @Override
-    public String toString() {
-        return super.toString() + " | HumedadMax: " + humedadMaxima +
-                "% | Granulometria: " + granulometria + " mm";
-    }
 }

@@ -39,10 +39,4 @@ public class ProductoLiquido extends Producto {
         this.viscosidad = viscosidad;
     }
 
-    //Metodo
-    @Override
-    public String toString() {
-        return super.toString() + " | Viscosidad: " + viscosidad +
-                " cP | TempMax: " + temperaturaMaxima + "°C";
-    }
 }

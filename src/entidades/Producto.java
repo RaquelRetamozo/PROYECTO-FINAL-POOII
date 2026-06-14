@@ -79,11 +79,4 @@ public abstract class Producto {
         this.dosis = dosis;
     }
 
-    @Override
-    public String toString() {
-        return "[" + getTipo() + "] " + idProducto + " - " + nombre +
-                " | Dosis: " + dosis + " | Cant: " + cantidad +
-                " | Vence: " + fechaVencimiento +
-                (estaVencido() ? "VENCIDO" : "");
-    }
 }

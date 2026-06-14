@@ -55,13 +55,4 @@ public class Despacho {
     public void setEstado(String estado) { this.estado = estado; }
     public void setObservacion(String observacion) { this.observacion = observacion; }
 
-    @Override
-    public String toString() {
-        return "Despacho: " + idDespacho +
-                " | Cliente: " + cliente.getRazonSocial() +
-                " | Transportista: " + transportista.getNombre() +
-                " | Fecha: " + fechaDespacho +
-                " | Estado: " + estado +
-                " | Total: S/." + getTotalDespacho();
-    }
 }

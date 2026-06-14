@@ -107,12 +107,4 @@ public class ZonaAlmacen {
         this.tipoProductoPermitido = tipoProductoPermitido;
     }
 
-    //Metodo
-    @Override
-    public String toString() {
-        return "Zona: " + idZona + " - " + nombre +
-                " | Temp: " + temperaturaMin + "°C - " + temperaturaMax + "°C" +
-                " | Humedad: " + humedadMin + "% - " + humedadMax + "%" +
-                " | Tipo: " + tipoProductoPermitido;
-    }
 }

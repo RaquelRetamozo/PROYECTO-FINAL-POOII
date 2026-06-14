@@ -65,10 +65,4 @@ public class Ubicacion {
         this.ocupado = ocupado;
     }
 
-    //Metodo
-    @Override
-    public String toString() {
-        return "Ubicacion: " + idUbicacion + " | " + getDireccionCompleta() +
-                " | Estado: " + (ocupado ? "OCUPADO" : "LIBRE");
-    }
 }

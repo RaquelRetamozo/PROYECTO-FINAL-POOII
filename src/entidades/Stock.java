@@ -71,13 +71,4 @@ public class Stock {
         this.cantidadMinima = cantidadMinima;
     }
 
-    //Metodo
-    @Override
-    public String toString() {
-        return "Stock: " + idStock + " | Lote: " + lote.getNumeroLote() +
-                " | Disponible: " + cantidadDisponible +
-                " | Minimo: " + cantidadMinima +
-                (hayDesabastecimiento() ? " ⚠ BAJO STOCK" : "") +
-                " | Actualizado: " + ultimaActualizacion;
-    }
 }

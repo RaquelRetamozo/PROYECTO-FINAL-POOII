@@ -38,11 +38,4 @@ public class LecturaHumedad extends LecturaSensor {
     public void setHumedadMin(double humedadMin) { this.humedadMin = humedadMin; }
     public void setHumedadMax(double humedadMax) { this.humedadMax = humedadMax; }
 
-    //ToString
-    @Override
-    public String toString() {
-        return super.toString() +
-                " | Humedad: " + humedadRegistrada + "%" +
-                " | Rango: " + humedadMin + "% - " + humedadMax + "%";
-    }
 }

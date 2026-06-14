@@ -89,12 +89,4 @@ public class Almacen {
         this.capacidadTotal = capacidadTotal;
     }
 
-    @Override
-    public String toString() {
-        return "Almacen: " + idAlmacen + " - " + nombre +
-                " | Direccion: " + direccion +
-                " | Capacidad: " + capacidadTotal +
-                " | Libres: " + getTotalUbicacionesLibres() +
-                " | Ocupadas: " + getTotalUbicacionesOcupadas();
-    }
 }

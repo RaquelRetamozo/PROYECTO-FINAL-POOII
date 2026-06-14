@@ -37,13 +37,4 @@ public class DetalleDespacho {
     public void setCantidad(int cantidad) { this.cantidad = cantidad; }
     public void setPrecioUnitario(double precioUnitario) { this.precioUnitario = precioUnitario; }
 
-    @Override
-    public String toString() {
-        return "Detalle: " + idDetalle +
-                " | Lote: " + lote.getNumeroLote() +
-                " | Producto: " + lote.getProducto().getNombre() +
-                " | Cant: " + cantidad +
-                " | P.Unit: S/." + precioUnitario +
-                " | Subtotal: S/." + getSubtotal();
-    }
 }

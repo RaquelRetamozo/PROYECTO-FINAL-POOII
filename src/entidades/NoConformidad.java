@@ -63,15 +63,4 @@ public class NoConformidad {
     public void setResponsable(String responsable) { this.responsable = responsable; }
     public void setLote(Lote lote) { this.lote = lote; }
 
-    //ToString
-    @Override
-    public String toString() {
-        return "NoConformidad: " + idNoConformidad +
-                " | Nivel: " + nivel +
-                " | Area: " + area +
-                " | Estado: " + estado +
-                " | Detectada: " + fechaDeteccion +
-                " | Responsable: " + responsable +
-                " | Lote: " + lote.getNumeroLote();
-    }
 }

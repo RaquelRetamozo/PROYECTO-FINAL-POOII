@@ -43,13 +43,4 @@ public class LecturaSensor {
     public void setValor(double valor) { this.valor = valor; }
     public void setDentroRango(boolean dentroRango) { this.dentroRango = dentroRango; }
 
-    @Override
-    public String toString() {
-        return "Lectura: " + idLectura +
-                " | Sensor: " + idSensor +
-                " | Zona: " + zona.getNombre() +
-                " | Valor: " + valor +
-                " | Fecha: " + fechaHora +
-                " | Estado: " + (dentroRango ? "DENTRO DE RANGO" : " FUERA DE RANGO");
-    }
 }

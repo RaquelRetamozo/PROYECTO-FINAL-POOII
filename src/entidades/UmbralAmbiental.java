@@ -55,12 +55,4 @@ public class UmbralAmbiental {
     public void setHumedadMax(double humedadMax) { this.humedadMax = humedadMax; }
     public void setTipoProducto(String tipoProducto) { this.tipoProducto = tipoProducto; }
 
-    //ToString
-    @Override
-    public String toString() {
-        return "Umbral: " + idUmbral + " - " + nombre +
-                " | Temp: " + temperaturaMin + "°C - " + temperaturaMax + "°C" +
-                " | Humedad: " + humedadMin + "% - " + humedadMax + "%" +
-                " | Tipo: " + tipoProducto;
-    }
 }
