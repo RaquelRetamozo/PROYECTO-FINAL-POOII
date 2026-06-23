@@ -1,3 +1,7 @@
+package Model.repositorios;
+
+import Model.entidades.Lote;
+
 import java.util.List;
 
 public interface ILoteRepository {
