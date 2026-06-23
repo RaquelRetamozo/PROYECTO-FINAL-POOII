@@ -1,4 +1,4 @@
-package entidades;
+package Model.entidades;
 
 public class UmbralAmbiental {
 

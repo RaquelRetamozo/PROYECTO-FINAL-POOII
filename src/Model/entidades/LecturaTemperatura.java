@@ -1,6 +1,4 @@
-package entidades;
-
-import java.time.LocalDateTime;
+package Model.entidades;
 
 public class LecturaTemperatura extends LecturaSensor {
 

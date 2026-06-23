@@ -1,4 +1,4 @@
-package entidades;
+package Model.entidades;
 import java.time.LocalDate;
 
 public class Lote {
