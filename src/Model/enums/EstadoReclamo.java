@@ -2,7 +2,7 @@ package Model.enums;
 
 public enum EstadoReclamo {
     PENDIENTE,
-    EN_PROCESO,
+    EN_REVISION,
     RESUELTO,
     CERRADO
 }

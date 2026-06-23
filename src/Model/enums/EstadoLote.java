@@ -3,7 +3,6 @@ package Model.enums;
 public enum EstadoLote {
     ACTIVO,
     VENCIDO,
-    DESPACHADO,
+    AGOTADO,
     CUARENTENA,
-    DADO_DE_BAJA
 }

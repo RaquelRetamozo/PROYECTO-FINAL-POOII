@@ -2,7 +2,7 @@ package Model.enums;
 
 public enum EstadoDespacho {
     PENDIENTE,
-    EN_PROCESO,
+    EN_EJECUCION,
     ENTREGADO,
-    CANCELADO
+    TERMINADO
 }
