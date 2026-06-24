@@ -5,7 +5,7 @@ import Model.enums.TipoAlerta;
 public class AlertaFactory {
 
     //Métodos
-    public static String crear(TipoAlerta tipo) {
+    public static String crear(TipoAlerta tipo, String detalle) {
         switch (tipo) {
             case VENCIMIENTO:
                 return "⚠ ALERTA VENCIMIENTO: " + detalle;
