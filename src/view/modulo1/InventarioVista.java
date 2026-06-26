@@ -1,7 +1,7 @@
-package view;
+package view.modulo1;
 
 import Model.entidades.Producto;
-import java.time.LocalDate;
+
 import java.util.List;
 import java.util.Scanner;
 

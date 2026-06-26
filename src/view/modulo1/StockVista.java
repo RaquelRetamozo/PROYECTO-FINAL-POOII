@@ -1,4 +1,4 @@
-package view;
+package view.modulo1;
 
 import Model.entidades.Stock;
 import java.util.List;
