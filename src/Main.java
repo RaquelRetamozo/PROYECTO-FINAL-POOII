@@ -34,5 +34,17 @@ public static void Main(Strings){
     InventarioController inventarioController = new InventarioController(inventarioService);
     StockController stockController = new StockController(stockService);
     LoteController loteController = new LoteController(loteService);
+    TrazabilidadController trazabilidadController = new TrazabilidadController(trazabilidadService);
+    DespachoController despachoController = new DespachoController(despachoService);
+    ClienteController clienteController = new ClienteController(ctx.getClienteRepo());
+    MonitoreoController monitoreoController = new MonitoreoController(monitoreoService);
+    AlertaController alertaController = new AlertaController(alertaVencimientoService, alertaDesabastecimientoService, alertaAmbientalService);
+    NoConformidadController noConformidadController = new NoConformidadController(noConformidadService);
+    ReclamoController reclamoController = new ReclamoController(reclamoService);
+    ReporteController reporteController = new ReporteController(reporteService);
+    EstadisticaController estadisticaController = new EstadisticaController(estadisticaService);
+    UsuarioController usuarioController = new UsuarioController(usuarioService);
+    AutenticacionController autenticacionController = new AutenticacionController(autenticacionService);
+
     {
 }
