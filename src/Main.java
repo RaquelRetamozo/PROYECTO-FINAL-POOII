@@ -96,6 +96,29 @@ public static void Main(Strings){
 
             switch (opcion){
                 case 1:
+                    // Modulo 1: Gestion de inventarios
+                    boolean salirMod1 = false;
+                    while (!salirMod1) {
+                        System.out.println("\n===MODULO 1:GESTION DE INVENTARIOS ");
+                        System.out.println("1:Gestion de productos ");
+                        System.out.println("2. Gestion de stock");
+                        System.out.println("3. Alertas ");
+                        System.out.println("0.Volver");
+                        System.out.println("Seleccione: ");
+                        int op1= Integer.parseInt(scanner.nextLine());
+                        switch (op1){
+                            case 1:
+                                boolean salirProd = false;
+                                while (!salirProd) {
+                                    int op = inventarioVista.mostrarMenu();
+                                    if (op ==1)  {
+                                        String[]datos = inventarioVista.pedirDatosProducto();
+                                        //
+                                    }
+                                }
+                        }
+                    }
+
 
             }
         }
