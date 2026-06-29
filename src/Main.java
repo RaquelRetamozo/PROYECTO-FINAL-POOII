@@ -63,7 +63,9 @@ public static void Main(Strings){
     EstadisticaVista estadisticaVista = new EstadisticaVista();
     UsuarioVista usuarioVista = new UsuarioVista();
     DashboardVista dashboardVista = new DashboardVista();
-
+    // Usuario de prueba
+    ctx.getUsuarioRepo().agregar(new Usuario("U001", "Admin", "Cramer",
+            "admin@cramer.com", "1234", "ADMINISTRADOR"));
 
     {
 }
