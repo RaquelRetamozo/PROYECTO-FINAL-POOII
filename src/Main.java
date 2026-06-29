@@ -67,5 +67,21 @@ public static void Main(Strings){
     ctx.getUsuarioRepo().agregar(new Usuario("U001", "Admin", "Cramer",
             "admin@cramer.com", "1234", "ADMINISTRADOR"));
 
+    // Login
+    boolean sesionIniciada = false;
+    while (!sesionIniciada){
+        try {
+            loginVista.mostrarBienvenida();
+            String email = loginVista.pedirEmail();
+            String password = loginVista.pedirPassword();
+            autenticacionController.iniciarSasion(email, password);
+            sesionIniciada = true;
+        }catch (Exception e) {
+            loginVista.mostrarErrorLogin();
+        }
+    }
+    // Menu principal
+
+    }
     {
 }
