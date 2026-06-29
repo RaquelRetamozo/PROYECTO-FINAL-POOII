@@ -81,7 +81,25 @@ public static void Main(Strings){
         }
     }
     // Menu principal
+    boolean salir = false;
+    while (!salir) {
+        try {
+            System.out.println("\n======================");
+            System.out.println("     SISTEMA DE GESTION - CRAMER PERU S.A.C");
+            System.out.println("=========================");
+            System.out.println("1. Modulo 1: Gestion de inventarios");
+            System.out.println("2. Modulo 2: Trazabilidad de Lotes");
+            System.out.println("3. Modulo 3: Monitoreo Ambiental");
+            System.out.println("0. Salir");
+            Scanner scanner= new Scanner (System.in);
+            int opcion = Integer.parseInt(scanner.nextLine());
 
+            switch (opcion){
+                case 1:
+
+            }
+        }
+    }
     }
     {
 }
