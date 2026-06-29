@@ -46,5 +46,24 @@ public static void Main(Strings){
     UsuarioController usuarioController = new UsuarioController(usuarioService);
     AutenticacionController autenticacionController = new AutenticacionController(autenticacionService);
 
+    //Vistas
+    LoginVista login vista = new LoginVista();
+    MenuPrincipal menuPrincipal = new MenuPrinciapal();
+    InventarioVista inventarioVista = new InventarioVista();
+    StockVista stockVista = new StcokVista()
+    AlertaVista alertaVista = new AlertaVista();
+    LoteVista loteVista = new LoteVista();
+    DespachoVista despachoVista = new DespachoVista();
+    ClienteVista clienteVista = new DespachoVista();
+    TrazabilidadVista trazabilidadVista = new TrazabilidadVista();
+    MonitoreoAmbientalVista monitoreoVista = new MonitoreoAmbiental();
+    NoConformidadVista noConformidadVista =  new NoConformidadVista();
+    ReclamoVista reclamoVista = new ReclamoVista();
+    ReporteVista reporteVista = new ReporteVista();
+    EstadisticaVista estadisticaVista = new EstadisticaVista();
+    UsuarioVista usuarioVista = new UsuarioVista();
+    DashboardVista dashboardVista = new DashboardVista();
+
+
     {
 }
