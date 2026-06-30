@@ -1,36 +1,41 @@
 package controller;
 
-import Model.entidades.ReporteCalidad;
-import Model.entidades.ReporteDespachos;
-import Model.entidades.ReporteInventario;
-import Model.servicios.ReporteService;
+// Corregido: Paquetes en minúsculas por convención de Java (model en lugar de Model)
+import model.entidades.ReporteCalidad;
+import model.entidades.ReporteDespachos;
+import model.entidades.ReporteInventario;
+import model.servicios.ReporteService;
 
 public class ReporteController {
 
-    //Atributos
-    private ReporteService reporteService;
+    // Atributos
+    private final ReporteService reporteService; // 'final' porque la referencia al servicio no debería cambiar
 
-    //Constructor
+    // Constructor
     public ReporteController(ReporteService reporteService) {
         this.reporteService = reporteService;
     }
 
-    //Métodos
+    // Métodos
     public ReporteInventario generarReporteInventario(String generadoPor) {
-        ReporteInventario reporte = reporteService.generarReporteInventario(generadoPor);
-        System.out.println("Reporte de inventario generado correctamente.");
-        return reporte;
+        // Validación básica antes de procesar
+        if (generadoPor == null || generadoPor.trim().isEmpty()) {
+            return null;
+        }
+        return reporteService.generarReporteInventario(generadoPor);
     }
 
     public ReporteDespachos generarReporteDespachos(String generadoPor) {
-        ReporteDespachos reporte = reporteService.generarReporteDespachos(generadoPor);
-        System.out.println("Reporte de despachos generado correctamente.");
-        return reporte;
+        if (generadoPor == null || generadoPor.trim().isEmpty()) {
+            return null;
+        }
+        return reporteService.generarReporteDespachos(generadoPor);
     }
 
     public ReporteCalidad generarReporteCalidad(String generadoPor) {
-        ReporteCalidad reporte = reporteService.generarReporteCalidad(generadoPor);
-        System.out.println("Reporte de calidad generado correctamente.");
-        return reporte;
+        if (generadoPor == null || generadoPor.trim().isEmpty()) {
+            return null;
+        }
+        return reporteService.generarReporteCalidad(generadoPor);
     }
 }
