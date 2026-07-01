@@ -107,9 +107,10 @@ public class Main {
                 System.out.println("\n========================================");
                 System.out.println("   SISTEMA DE GESTIÓN - CRAMER PERÚ");
                 System.out.println("========================================");
-                System.out.println("1. Interfaz del Módulo 1: Gestión de Inventario");
-                System.out.println("2. Interfaz del Módulo 2: Trazabilidad de Lotes");
-                System.out.println("3. Interfaz del Módulo 3: Monitoreo Ambiental");
+                System.out.println("1. Módulo 0: Registro Base (Productos y Clientes)");
+                System.out.println("2. Módulo 1: Gestión de Inventario");
+                System.out.println("3. Módulo 2: Trazabilidad de Lotes");
+                System.out.println("4. Módulo 3: Monitoreo Ambiental");
                 System.out.println("0. Salir");
                 System.out.print("Seleccione: ");
                 int opcion = Integer.parseInt(scanner.nextLine());
@@ -117,16 +118,16 @@ public class Main {
                 switch (opcion) {
 
                     case 1:
-                        boolean salirMod1 = false;
-                        while (!salirMod1) {
-                            System.out.println("\n=== INTERFAZ DEL MÓDULO 1: GESTIÓN DE INVENTARIO ===");
+                        boolean salirMod0 = false;
+                        while (!salirMod0) {
+                            System.out.println("\n=== MÓDULO 0: REGISTRO BASE ===");
                             System.out.println("1. Gestión de Productos");
-                            System.out.println("2. Gestión de Stock");
-                            System.out.println("3. Alertas");
+                            System.out.println("2. Gestión de Clientes");
+                            System.out.println("3. Gestión de Lotes");
                             System.out.println("0. Volver");
                             System.out.print("Seleccione: ");
-                            int op1 = Integer.parseInt(scanner.nextLine());
-                            switch (op1) {
+                            int op0 = Integer.parseInt(scanner.nextLine());
+                            switch (op0) {
                                 case 1:
                                     boolean salirProd = false;
                                     while (!salirProd) {
@@ -165,129 +166,6 @@ public class Main {
                                     }
                                     break;
                                 case 2:
-                                    boolean salirStock = false;
-                                    while (!salirStock) {
-                                        int op = stockVista.mostrarMenu();
-                                        if (op == 0) salirStock = true;
-                                        else if (op == 1) {
-                                            String[] datos = stockVista.pedirDatosStock();
-                                            Lote loteStock = loteController.buscarLote(datos[1]);
-                                            Stock stock = new Stock(datos[0], loteStock,
-                                                    Integer.parseInt(datos[2]), Integer.parseInt(datos[3]), LocalDate.now());
-                                            stockController.registrarStock(stock);
-                                            stockVista.mostrarExito("Stock registrado.");
-                                        }
-                                        else if (op == 2) {
-                                            String id = stockVista.pedirIdStock();
-                                            stockVista.mostrarStock(stockController.buscarStock(id));
-                                        }
-                                        else if (op == 3) stockVista.mostrarListaStocks(stockController.listarStocks());
-                                        else if (op == 4) {
-                                            String id = stockVista.pedirIdStock();
-                                            int cantidad = stockVista.pedirCantidad();
-                                            stockController.reducirStock(id, cantidad);
-                                            stockVista.mostrarExito("Stock reducido.");
-                                        }
-                                        else if (op == 5) {
-                                            String id = stockVista.pedirIdStock();
-                                            int cantidad = stockVista.pedirCantidad();
-                                            stockController.aumentarStock(id, cantidad);
-                                            stockVista.mostrarExito("Stock aumentado.");
-                                        }
-                                        else if (op == 6) stockVista.mostrarListaStocks(stockController.listarBajoStock());
-                                    }
-                                    break;
-                                case 3:
-                                    boolean salirAlerta = false;
-                                    while (!salirAlerta) {
-                                        int op = alertaVista.mostrarMenu();
-                                        if (op == 0) salirAlerta = true;
-                                        else if (op == 1) alertaVista.mostrarLotesProximosAVencer(alertaController.listarLotesProximosAVencer());
-                                        else if (op == 2) alertaVista.mostrarLotesVencidos(alertaController.listarLotesVencidos());
-                                        else if (op == 3) alertaVista.mostrarStockCritico(alertaController.listarStockCritico());
-                                        else if (op == 4) alertaVista.mostrarAlertasAmbientales(alertaController.listarAlertasAmbientales());
-                                    }
-                                    break;
-                                case 0:
-                                    salirMod1 = true;
-                                    break;
-                            }
-                        }
-                        break;
-
-                    case 2:
-                        boolean salirMod2 = false;
-                        while (!salirMod2) {
-                            System.out.println("\n=== INTERFAZ DEL MÓDULO 2: TRAZABILIDAD DE LOTES ===");
-                            System.out.println("1. Gestión de Lotes");
-                            System.out.println("2. Gestión de Despachos");
-                            System.out.println("3. Gestión de Clientes");
-                            System.out.println("4. Trazabilidad");
-                            System.out.println("0. Volver");
-                            System.out.print("Seleccione: ");
-                            int op2 = Integer.parseInt(scanner.nextLine());
-                            switch (op2) {
-                                case 1:
-                                    boolean salirLote = false;
-                                    while (!salirLote) {
-                                        int op = loteVista.mostrarMenu();
-                                        if (op == 0) salirLote = true;
-                                        else if (op == 1) {
-                                            String[] datos = loteVista.pedirDatosLote();
-                                            Producto productoLote = inventarioController.buscarProducto(datos[2]);
-                                            Lote lote = new Lote(datos[0], datos[1], productoLote,
-                                                    Integer.parseInt(datos[3]), LocalDate.now(), datos[4], "ACTIVO");
-                                            loteController.registrarLote(lote);
-                                            loteVista.mostrarExito("Lote registrado.");
-                                        }
-                                        else if (op == 2) {
-                                            String id = loteVista.pedirIdLote();
-                                            loteVista.mostrarLote(loteController.buscarLote(id));
-                                        }
-                                        else if (op == 3) loteVista.mostrarListaLotes(loteController.listarLotes());
-                                        else if (op == 4) loteVista.mostrarListaLotes(loteController.listarLotesVencidos());
-                                        else if (op == 5) loteVista.mostrarListaLotes(loteController.listarLotesActivos());
-                                    }
-                                    break;
-                                case 2:
-                                    boolean salirDesp = false;
-                                    while (!salirDesp) {
-                                        int op = despachoVista.mostrarMenu();
-                                        if (op == 0) salirDesp = true;
-                                        else if (op == 1) {
-                                            String[] datos = despachoVista.pedirDatosDespacho();
-                                            Cliente clienteDesp = clienteController.buscarCliente(datos[1]);
-                                            Transportista transportista = new Transportista(datos[2], datos[2], "", "", "", "", "");
-                                            Despacho despacho = new Despacho(datos[0], clienteDesp, transportista, LocalDate.now(), datos[3]);
-
-                                            System.out.println("--- Agregar detalle del despacho (obligatorio al menos 1) ---");
-                                            System.out.print("ID Lote: ");
-                                            String idLoteDet = scanner.nextLine();
-                                            Lote loteDet = loteController.buscarLote(idLoteDet);
-                                            System.out.print("Cantidad: ");
-                                            int cantidadDet = Integer.parseInt(scanner.nextLine());
-                                            System.out.print("Precio unitario: ");
-                                            double precioDet = Double.parseDouble(scanner.nextLine());
-                                            despacho.agregarDetalle(new DetalleDespacho("DET-" + datos[0], despacho, loteDet, cantidadDet, precioDet));
-
-                                            despachoController.registrarDespacho(despacho);
-                                            despachoVista.mostrarExito("Despacho registrado.");
-                                        }
-                                        else if (op == 2) {
-                                            String id = despachoVista.pedirIdDespacho();
-                                            despachoVista.mostrarDespacho(despachoController.buscarDespacho(id));
-                                        }
-                                        else if (op == 3) despachoVista.mostrarListaDespachos(despachoController.listarDespachos());
-                                        else if (op == 4) {
-                                            String id = despachoVista.pedirIdDespacho();
-                                            String nuevoEstado = despachoVista.pedirNuevoEstado();
-                                            despachoController.actualizarEstado(id, nuevoEstado);
-                                            despachoVista.mostrarExito("Estado actualizado.");
-                                        }
-                                        else if (op == 5) despachoVista.mostrarListaDespachos(despachoController.listarPendientes());
-                                    }
-                                    break;
-                                case 3:
                                     boolean salirCli = false;
                                     while (!salirCli) {
                                         int op = clienteVista.mostrarMenu();
@@ -316,7 +194,149 @@ public class Main {
                                         }
                                     }
                                     break;
-                                case 4:
+                                case 3:
+                                    boolean salirLote = false;
+                                    while (!salirLote) {
+                                        int op = loteVista.mostrarMenu();
+                                        if (op == 0) salirLote = true;
+                                        else if (op == 1) {
+                                            inventarioVista.mostrarListaProductos(inventarioController.listarProductos());
+                                            String[] datos = loteVista.pedirDatosLote();
+                                            Producto productoLote = inventarioController.buscarProducto(datos[2]);
+                                            Lote lote = new Lote(datos[0], datos[1], productoLote,
+                                                    Integer.parseInt(datos[3]), LocalDate.now(), datos[4], "ACTIVO");
+                                            loteController.registrarLote(lote);
+                                            loteVista.mostrarExito("Lote registrado.");
+                                        }
+                                        else if (op == 2) {
+                                            String id = loteVista.pedirIdLote();
+                                            loteVista.mostrarLote(loteController.buscarLote(id));
+                                        }
+                                        else if (op == 3) loteVista.mostrarListaLotes(loteController.listarLotes());
+                                        else if (op == 4) loteVista.mostrarListaLotes(loteController.listarLotesVencidos());
+                                        else if (op == 5) loteVista.mostrarListaLotes(loteController.listarLotesActivos());
+                                    }
+                                    break;
+                                case 0:
+                                    salirMod0 = true;
+                                    break;
+                            }
+                        }
+                        break;
+
+                    case 2:
+                        boolean salirMod1 = false;
+                        while (!salirMod1) {
+                            System.out.println("\n=== INTERFAZ DEL MÓDULO 1: GESTIÓN DE INVENTARIO ===");
+                            System.out.println("1. Gestión de Stock");
+                            System.out.println("2. Alertas");
+                            System.out.println("0. Volver");
+                            System.out.print("Seleccione: ");
+                            int op1 = Integer.parseInt(scanner.nextLine());
+                            switch (op1) {
+                                case 1:
+                                    boolean salirStock = false;
+                                    while (!salirStock) {
+                                        int op = stockVista.mostrarMenu();
+                                        if (op == 0) salirStock = true;
+                                        else if (op == 1) {
+                                            loteVista.mostrarListaLotes(loteController.listarLotes());
+                                            String[] datos = stockVista.pedirDatosStock();
+                                            Lote loteStock = loteController.buscarLote(datos[1]);
+                                            Stock stock = new Stock(datos[0], loteStock,
+                                                    Integer.parseInt(datos[2]), Integer.parseInt(datos[3]), LocalDate.now());
+                                            stockController.registrarStock(stock);
+                                            stockVista.mostrarExito("Stock registrado.");
+                                        }
+                                        else if (op == 2) {
+                                            String id = stockVista.pedirIdStock();
+                                            stockVista.mostrarStock(stockController.buscarStock(id));
+                                        }
+                                        else if (op == 3) stockVista.mostrarListaStocks(stockController.listarStocks());
+                                        else if (op == 4) {
+                                            String id = stockVista.pedirIdStock();
+                                            int cantidad = stockVista.pedirCantidad();
+                                            stockController.reducirStock(id, cantidad);
+                                            stockVista.mostrarExito("Stock reducido.");
+                                        }
+                                        else if (op == 5) {
+                                            String id = stockVista.pedirIdStock();
+                                            int cantidad = stockVista.pedirCantidad();
+                                            stockController.aumentarStock(id, cantidad);
+                                            stockVista.mostrarExito("Stock aumentado.");
+                                        }
+                                        else if (op == 6) stockVista.mostrarListaStocks(stockController.listarBajoStock());
+                                    }
+                                    break;
+                                case 2:
+                                    boolean salirAlerta = false;
+                                    while (!salirAlerta) {
+                                        int op = alertaVista.mostrarMenu();
+                                        if (op == 0) salirAlerta = true;
+                                        else if (op == 1) alertaVista.mostrarLotesProximosAVencer(alertaController.listarLotesProximosAVencer());
+                                        else if (op == 2) alertaVista.mostrarLotesVencidos(alertaController.listarLotesVencidos());
+                                        else if (op == 3) alertaVista.mostrarStockCritico(alertaController.listarStockCritico());
+                                        else if (op == 4) alertaVista.mostrarAlertasAmbientales(alertaController.listarAlertasAmbientales());
+                                    }
+                                    break;
+                                case 0:
+                                    salirMod1 = true;
+                                    break;
+                            }
+                        }
+                        break;
+
+                    case 3:
+                        boolean salirMod2 = false;
+                        while (!salirMod2) {
+                            System.out.println("\n=== INTERFAZ DEL MÓDULO 2: TRAZABILIDAD DE LOTES ===");
+                            System.out.println("1. Gestión de Despachos");
+                            System.out.println("2. Trazabilidad");
+                            System.out.println("0. Volver");
+                            System.out.print("Seleccione: ");
+                            int op2 = Integer.parseInt(scanner.nextLine());
+                            switch (op2) {
+                                case 1:
+                                    boolean salirDesp = false;
+                                    while (!salirDesp) {
+                                        int op = despachoVista.mostrarMenu();
+                                        if (op == 0) salirDesp = true;
+                                        else if (op == 1) {
+                                            clienteVista.mostrarListaClientes(clienteController.listarClientes());
+                                            String[] datos = despachoVista.pedirDatosDespacho();
+                                            Cliente clienteDesp = clienteController.buscarCliente(datos[1]);
+                                            Transportista transportista = new Transportista(datos[2], datos[2], "", "", "", "", "");
+                                            Despacho despacho = new Despacho(datos[0], clienteDesp, transportista, LocalDate.now(), datos[3]);
+
+                                            System.out.println("--- Agregar detalle del despacho (obligatorio al menos 1) ---");
+                                            loteVista.mostrarListaLotes(loteController.listarLotes());
+                                            System.out.print("ID Lote: ");
+                                            String idLoteDet = scanner.nextLine();
+                                            Lote loteDet = loteController.buscarLote(idLoteDet);
+                                            System.out.print("Cantidad: ");
+                                            int cantidadDet = Integer.parseInt(scanner.nextLine());
+                                            System.out.print("Precio unitario: ");
+                                            double precioDet = Double.parseDouble(scanner.nextLine());
+                                            despacho.agregarDetalle(new DetalleDespacho("DET-" + datos[0], despacho, loteDet, cantidadDet, precioDet));
+
+                                            despachoController.registrarDespacho(despacho);
+                                            despachoVista.mostrarExito("Despacho registrado.");
+                                        }
+                                        else if (op == 2) {
+                                            String id = despachoVista.pedirIdDespacho();
+                                            despachoVista.mostrarDespacho(despachoController.buscarDespacho(id));
+                                        }
+                                        else if (op == 3) despachoVista.mostrarListaDespachos(despachoController.listarDespachos());
+                                        else if (op == 4) {
+                                            String id = despachoVista.pedirIdDespacho();
+                                            String nuevoEstado = despachoVista.pedirNuevoEstado();
+                                            despachoController.actualizarEstado(id, nuevoEstado);
+                                            despachoVista.mostrarExito("Estado actualizado.");
+                                        }
+                                        else if (op == 5) despachoVista.mostrarListaDespachos(despachoController.listarPendientes());
+                                    }
+                                    break;
+                                case 2:
                                     boolean salirTraz = false;
                                     while (!salirTraz) {
                                         int op = trazabilidadVista.mostrarMenu();
@@ -334,7 +354,7 @@ public class Main {
                         }
                         break;
 
-                    case 3:
+                    case 4:
                         boolean salirMod3 = false;
                         while (!salirMod3) {
                             System.out.println("\n=== INTERFAZ DEL MÓDULO 3: MONITOREO AMBIENTAL ===");
@@ -378,6 +398,7 @@ public class Main {
                                         int op = noConformidadVista.mostrarMenu();
                                         if (op == 0) salirNc = true;
                                         else if (op == 1) {
+                                            loteVista.mostrarListaLotes(loteController.listarLotes());
                                             String[] datos = noConformidadVista.pedirDatosNoConformidad();
                                             Lote loteNc = loteController.buscarLote(datos[5]);
                                             NoConformidad nc = new NoConformidad(datos[0], datos[1], datos[2], datos[3], datos[4], loteNc);
@@ -403,6 +424,8 @@ public class Main {
                                         int op = reclamoVista.mostrarMenu();
                                         if (op == 0) salirRec = true;
                                         else if (op == 1) {
+                                            clienteVista.mostrarListaClientes(clienteController.listarClientes());
+                                            loteVista.mostrarListaLotes(loteController.listarLotes());
                                             String[] datos = reclamoVista.pedirDatosReclamo();
                                             Cliente clienteRec = clienteController.buscarCliente(datos[1]);
                                             Lote loteRec = loteController.buscarLote(datos[2]);
