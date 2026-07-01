@@ -1,9 +1,25 @@
 import Model.Contexto;
+import Model.entidades.Cliente;
+import Model.entidades.Despacho;
+import Model.entidades.DetalleDespacho;
+import Model.entidades.LecturaHumedad;
+import Model.entidades.LecturaSensor;
+import Model.entidades.LecturaTemperatura;
+import Model.entidades.Lote;
+import Model.entidades.NoConformidad;
+import Model.entidades.Producto;
+import Model.entidades.Reclamo;
+import Model.entidades.Stock;
+import Model.entidades.Transportista;
 import Model.entidades.Usuario;
+import Model.entidades.ZonaAlmacen;
+import Model.patrones.factory.ProductoFactory;
 import Model.servicios.*;
 import controller.*;
 import view.*;
-
+import view.modulo1.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -29,7 +45,6 @@ public class Main {
         EstadisticaService estadisticaService = new EstadisticaService(ctx.getStockRepo(), ctx.getDespachoRepo());
         UsuarioService usuarioService = new UsuarioService(ctx.getUsuarioRepo());
         AutenticacionService autenticacionService = new AutenticacionService(ctx.getUsuarioRepo());
-        ClienteService clienteService = new ClienteService(ctx.getClienteRepo());
 
         // Controllers
         InventarioController inventarioController = new InventarioController(inventarioService);
@@ -49,7 +64,6 @@ public class Main {
 
         // Vistas
         LoginVista loginVista = new LoginVista();
-        MenuPrincipal menuPrincipal = new MenuPrincipal();
         InventarioVista inventarioVista = new InventarioVista();
         StockVista stockVista = new StockVista();
         AlertaVista alertaVista = new AlertaVista();
@@ -68,6 +82,9 @@ public class Main {
         // Usuario de prueba
         ctx.getUsuarioRepo().agregar(new Usuario("U001", "Admin", "Cramer",
                 "admin@cramer.com", "1234", "ADMINISTRADOR"));
+
+        // Scanner
+        Scanner scanner = new Scanner(System.in);
 
         // Login
         boolean sesionIniciada = false;
@@ -90,20 +107,19 @@ public class Main {
                 System.out.println("\n========================================");
                 System.out.println("   SISTEMA DE GESTIÓN - CRAMER PERÚ");
                 System.out.println("========================================");
-                System.out.println("1. Módulo 1: Gestión de Inventarios");
-                System.out.println("2. Módulo 2: Trazabilidad de Lotes");
-                System.out.println("3. Módulo 3: Monitoreo Ambiental");
+                System.out.println("1. Interfaz del Módulo 1: Gestión de Inventario");
+                System.out.println("2. Interfaz del Módulo 2: Trazabilidad de Lotes");
+                System.out.println("3. Interfaz del Módulo 3: Monitoreo Ambiental");
                 System.out.println("0. Salir");
                 System.out.print("Seleccione: ");
-                Scanner scanner = new Scanner(System.in);
                 int opcion = Integer.parseInt(scanner.nextLine());
 
                 switch (opcion) {
+
                     case 1:
-                        // Módulo 1: Gestión de Inventarios
                         boolean salirMod1 = false;
                         while (!salirMod1) {
-                            System.out.println("\n=== MÓDULO 1: GESTIÓN DE INVENTARIOS ===");
+                            System.out.println("\n=== INTERFAZ DEL MÓDULO 1: GESTIÓN DE INVENTARIO ===");
                             System.out.println("1. Gestión de Productos");
                             System.out.println("2. Gestión de Stock");
                             System.out.println("3. Alertas");
@@ -118,12 +134,33 @@ public class Main {
                                         if (op == 0) salirProd = true;
                                         else if (op == 1) {
                                             String[] datos = inventarioVista.pedirDatosProducto();
-                                            // registrar producto via factory
+                                            Producto p = ProductoFactory.crear(
+                                                    datos[2], datos[0], datos[1],
+                                                    LocalDate.parse(datos[3]), LocalDate.parse(datos[4]),
+                                                    Double.parseDouble(datos[5]), datos[6],
+                                                    Double.parseDouble(datos[7]));
+                                            inventarioController.registrarProducto(p);
+                                            inventarioVista.mostrarExito("Producto registrado.");
+                                        }
+                                        else if (op == 2) {
+                                            String id = inventarioVista.pedirIdProducto();
+                                            inventarioVista.mostrarProducto(inventarioController.buscarProducto(id));
                                         }
                                         else if (op == 3) inventarioVista.mostrarListaProductos(inventarioController.listarProductos());
+                                        else if (op == 4) {
+                                            String[] datos = inventarioVista.pedirDatosProducto();
+                                            Producto p = ProductoFactory.crear(
+                                                    datos[2], datos[0], datos[1],
+                                                    LocalDate.parse(datos[3]), LocalDate.parse(datos[4]),
+                                                    Double.parseDouble(datos[5]), datos[6],
+                                                    Double.parseDouble(datos[7]));
+                                            inventarioController.actualizarProducto(p);
+                                            inventarioVista.mostrarExito("Producto actualizado.");
+                                        }
                                         else if (op == 5) {
                                             String id = inventarioVista.pedirIdProducto();
                                             inventarioController.eliminarProducto(id);
+                                            inventarioVista.mostrarExito("Producto eliminado.");
                                         }
                                     }
                                     break;
@@ -132,7 +169,31 @@ public class Main {
                                     while (!salirStock) {
                                         int op = stockVista.mostrarMenu();
                                         if (op == 0) salirStock = true;
+                                        else if (op == 1) {
+                                            String[] datos = stockVista.pedirDatosStock();
+                                            Lote loteStock = loteController.buscarLote(datos[1]);
+                                            Stock stock = new Stock(datos[0], loteStock,
+                                                    Integer.parseInt(datos[2]), Integer.parseInt(datos[3]), LocalDate.now());
+                                            stockController.registrarStock(stock);
+                                            stockVista.mostrarExito("Stock registrado.");
+                                        }
+                                        else if (op == 2) {
+                                            String id = stockVista.pedirIdStock();
+                                            stockVista.mostrarStock(stockController.buscarStock(id));
+                                        }
                                         else if (op == 3) stockVista.mostrarListaStocks(stockController.listarStocks());
+                                        else if (op == 4) {
+                                            String id = stockVista.pedirIdStock();
+                                            int cantidad = stockVista.pedirCantidad();
+                                            stockController.reducirStock(id, cantidad);
+                                            stockVista.mostrarExito("Stock reducido.");
+                                        }
+                                        else if (op == 5) {
+                                            String id = stockVista.pedirIdStock();
+                                            int cantidad = stockVista.pedirCantidad();
+                                            stockController.aumentarStock(id, cantidad);
+                                            stockVista.mostrarExito("Stock aumentado.");
+                                        }
                                         else if (op == 6) stockVista.mostrarListaStocks(stockController.listarBajoStock());
                                     }
                                     break;
@@ -144,6 +205,7 @@ public class Main {
                                         else if (op == 1) alertaVista.mostrarLotesProximosAVencer(alertaController.listarLotesProximosAVencer());
                                         else if (op == 2) alertaVista.mostrarLotesVencidos(alertaController.listarLotesVencidos());
                                         else if (op == 3) alertaVista.mostrarStockCritico(alertaController.listarStockCritico());
+                                        else if (op == 4) alertaVista.mostrarAlertasAmbientales(alertaController.listarAlertasAmbientales());
                                     }
                                     break;
                                 case 0:
@@ -154,10 +216,9 @@ public class Main {
                         break;
 
                     case 2:
-                        // Módulo 2: Trazabilidad de Lotes
                         boolean salirMod2 = false;
                         while (!salirMod2) {
-                            System.out.println("\n=== MÓDULO 2: TRAZABILIDAD DE LOTES ===");
+                            System.out.println("\n=== INTERFAZ DEL MÓDULO 2: TRAZABILIDAD DE LOTES ===");
                             System.out.println("1. Gestión de Lotes");
                             System.out.println("2. Gestión de Despachos");
                             System.out.println("3. Gestión de Clientes");
@@ -171,6 +232,18 @@ public class Main {
                                     while (!salirLote) {
                                         int op = loteVista.mostrarMenu();
                                         if (op == 0) salirLote = true;
+                                        else if (op == 1) {
+                                            String[] datos = loteVista.pedirDatosLote();
+                                            Producto productoLote = inventarioController.buscarProducto(datos[2]);
+                                            Lote lote = new Lote(datos[0], datos[1], productoLote,
+                                                    Integer.parseInt(datos[3]), LocalDate.now(), datos[4], "ACTIVO");
+                                            loteController.registrarLote(lote);
+                                            loteVista.mostrarExito("Lote registrado.");
+                                        }
+                                        else if (op == 2) {
+                                            String id = loteVista.pedirIdLote();
+                                            loteVista.mostrarLote(loteController.buscarLote(id));
+                                        }
                                         else if (op == 3) loteVista.mostrarListaLotes(loteController.listarLotes());
                                         else if (op == 4) loteVista.mostrarListaLotes(loteController.listarLotesVencidos());
                                         else if (op == 5) loteVista.mostrarListaLotes(loteController.listarLotesActivos());
@@ -181,7 +254,36 @@ public class Main {
                                     while (!salirDesp) {
                                         int op = despachoVista.mostrarMenu();
                                         if (op == 0) salirDesp = true;
+                                        else if (op == 1) {
+                                            String[] datos = despachoVista.pedirDatosDespacho();
+                                            Cliente clienteDesp = clienteController.buscarCliente(datos[1]);
+                                            Transportista transportista = new Transportista(datos[2], datos[2], "", "", "", "", "");
+                                            Despacho despacho = new Despacho(datos[0], clienteDesp, transportista, LocalDate.now(), datos[3]);
+
+                                            System.out.println("--- Agregar detalle del despacho (obligatorio al menos 1) ---");
+                                            System.out.print("ID Lote: ");
+                                            String idLoteDet = scanner.nextLine();
+                                            Lote loteDet = loteController.buscarLote(idLoteDet);
+                                            System.out.print("Cantidad: ");
+                                            int cantidadDet = Integer.parseInt(scanner.nextLine());
+                                            System.out.print("Precio unitario: ");
+                                            double precioDet = Double.parseDouble(scanner.nextLine());
+                                            despacho.agregarDetalle(new DetalleDespacho("DET-" + datos[0], despacho, loteDet, cantidadDet, precioDet));
+
+                                            despachoController.registrarDespacho(despacho);
+                                            despachoVista.mostrarExito("Despacho registrado.");
+                                        }
+                                        else if (op == 2) {
+                                            String id = despachoVista.pedirIdDespacho();
+                                            despachoVista.mostrarDespacho(despachoController.buscarDespacho(id));
+                                        }
                                         else if (op == 3) despachoVista.mostrarListaDespachos(despachoController.listarDespachos());
+                                        else if (op == 4) {
+                                            String id = despachoVista.pedirIdDespacho();
+                                            String nuevoEstado = despachoVista.pedirNuevoEstado();
+                                            despachoController.actualizarEstado(id, nuevoEstado);
+                                            despachoVista.mostrarExito("Estado actualizado.");
+                                        }
                                         else if (op == 5) despachoVista.mostrarListaDespachos(despachoController.listarPendientes());
                                     }
                                     break;
@@ -190,7 +292,28 @@ public class Main {
                                     while (!salirCli) {
                                         int op = clienteVista.mostrarMenu();
                                         if (op == 0) salirCli = true;
+                                        else if (op == 1) {
+                                            String[] datos = clienteVista.pedirDatosCliente();
+                                            Cliente cliente = new Cliente(datos[0], datos[1], datos[2], datos[3], datos[4], datos[5], datos[6]);
+                                            clienteController.registrarCliente(cliente);
+                                            clienteVista.mostrarExito("Cliente registrado.");
+                                        }
+                                        else if (op == 2) {
+                                            String id = clienteVista.pedirIdCliente();
+                                            clienteVista.mostrarCliente(clienteController.buscarCliente(id));
+                                        }
                                         else if (op == 3) clienteVista.mostrarListaClientes(clienteController.listarClientes());
+                                        else if (op == 4) {
+                                            String[] datos = clienteVista.pedirDatosCliente();
+                                            Cliente cliente = new Cliente(datos[0], datos[1], datos[2], datos[3], datos[4], datos[5], datos[6]);
+                                            clienteController.actualizarCliente(cliente);
+                                            clienteVista.mostrarExito("Cliente actualizado.");
+                                        }
+                                        else if (op == 5) {
+                                            String id = clienteVista.pedirIdCliente();
+                                            clienteController.eliminarCliente(id);
+                                            clienteVista.mostrarExito("Cliente eliminado.");
+                                        }
                                     }
                                     break;
                                 case 4:
@@ -200,6 +323,7 @@ public class Main {
                                         if (op == 0) salirTraz = true;
                                         else if (op == 1) trazabilidadVista.mostrarDespachos(trazabilidadController.buscarPorLote(trazabilidadVista.pedirNumeroLote()));
                                         else if (op == 2) trazabilidadVista.mostrarDespachos(trazabilidadController.buscarPorCliente(trazabilidadVista.pedirIdCliente()));
+                                        else if (op == 3) trazabilidadVista.mostrarMovimientos(trazabilidadController.buscarMovimientosPorLote(trazabilidadVista.pedirIdLote()));
                                         else if (op == 4) trazabilidadVista.mostrarMovimientos(trazabilidadController.listarMovimientos());
                                     }
                                     break;
@@ -211,10 +335,9 @@ public class Main {
                         break;
 
                     case 3:
-                        // Módulo 3: Monitoreo Ambiental
                         boolean salirMod3 = false;
                         while (!salirMod3) {
-                            System.out.println("\n=== MÓDULO 3: MONITOREO AMBIENTAL ===");
+                            System.out.println("\n=== INTERFAZ DEL MÓDULO 3: MONITOREO AMBIENTAL ===");
                             System.out.println("1. Monitoreo de Sensores");
                             System.out.println("2. No Conformidades");
                             System.out.println("3. Reclamos");
@@ -229,6 +352,22 @@ public class Main {
                                     while (!salirMon) {
                                         int op = monitoreoVista.mostrarMenu();
                                         if (op == 0) salirMon = true;
+                                        else if (op == 1) {
+                                            String[] datos = monitoreoVista.pedirDatosLectura();
+                                            String idSensor = datos[0];
+                                            String tipo = datos[1].toUpperCase();
+                                            double valor = Double.parseDouble(datos[2]);
+                                            ZonaAlmacen zona = new ZonaAlmacen(datos[3], datos[3], 2, 8, 30, 70, "", new ArrayList<>());
+                                            String idLectura = idSensor + "-" + System.currentTimeMillis();
+                                            LecturaSensor lectura;
+                                            if (tipo.equals("TEMPERATURA")) {
+                                                lectura = new LecturaTemperatura(idLectura, idSensor, zona, valor, 2, 8);
+                                            } else {
+                                                lectura = new LecturaHumedad(idLectura, idSensor, zona, valor, 30, 70);
+                                            }
+                                            monitoreoController.registrarLectura(lectura);
+                                            monitoreoVista.mostrarExito("Lectura registrada.");
+                                        }
                                         else if (op == 2) monitoreoVista.mostrarListaLecturas(monitoreoController.listarLecturas());
                                         else if (op == 3) monitoreoVista.mostrarListaLecturas(monitoreoController.listarLecturasFueraRango());
                                     }
@@ -238,8 +377,24 @@ public class Main {
                                     while (!salirNc) {
                                         int op = noConformidadVista.mostrarMenu();
                                         if (op == 0) salirNc = true;
+                                        else if (op == 1) {
+                                            String[] datos = noConformidadVista.pedirDatosNoConformidad();
+                                            Lote loteNc = loteController.buscarLote(datos[5]);
+                                            NoConformidad nc = new NoConformidad(datos[0], datos[1], datos[2], datos[3], datos[4], loteNc);
+                                            noConformidadController.registrarNoConformidad(nc);
+                                            noConformidadVista.mostrarExito("No conformidad registrada.");
+                                        }
+                                        else if (op == 2) {
+                                            String id = noConformidadVista.pedirIdNoConformidad();
+                                            noConformidadVista.mostrarNoConformidad(noConformidadController.buscarNoConformidad(id));
+                                        }
                                         else if (op == 3) noConformidadVista.mostrarListaNoConformidades(noConformidadController.listarTodas());
                                         else if (op == 4) noConformidadVista.mostrarListaNoConformidades(noConformidadController.listarCriticas());
+                                        else if (op == 5) {
+                                            String id = noConformidadVista.pedirIdNoConformidad();
+                                            noConformidadController.cerrarNoConformidad(id);
+                                            noConformidadVista.mostrarExito("No conformidad cerrada.");
+                                        }
                                     }
                                     break;
                                 case 3:
@@ -247,8 +402,30 @@ public class Main {
                                     while (!salirRec) {
                                         int op = reclamoVista.mostrarMenu();
                                         if (op == 0) salirRec = true;
+                                        else if (op == 1) {
+                                            String[] datos = reclamoVista.pedirDatosReclamo();
+                                            Cliente clienteRec = clienteController.buscarCliente(datos[1]);
+                                            Lote loteRec = loteController.buscarLote(datos[2]);
+                                            Reclamo reclamo = new Reclamo(datos[0], clienteRec, loteRec, datos[3], datos[4], datos[5]);
+                                            reclamoController.registrarReclamo(reclamo);
+                                            reclamoVista.mostrarExito("Reclamo registrado.");
+                                        }
+                                        else if (op == 2) {
+                                            String id = reclamoVista.pedirIdReclamo();
+                                            reclamoVista.mostrarReclamo(reclamoController.buscarReclamo(id));
+                                        }
                                         else if (op == 3) reclamoVista.mostrarListaReclamos(reclamoController.listarTodos());
                                         else if (op == 4) reclamoVista.mostrarListaReclamos(reclamoController.listarPendientes());
+                                        else if (op == 5) {
+                                            String id = reclamoVista.pedirIdReclamo();
+                                            reclamoController.resolverReclamo(id);
+                                            reclamoVista.mostrarExito("Reclamo resuelto.");
+                                        }
+                                        else if (op == 6) {
+                                            String id = reclamoVista.pedirIdReclamo();
+                                            reclamoController.cerrarReclamo(id);
+                                            reclamoVista.mostrarExito("Reclamo cerrado.");
+                                        }
                                     }
                                     break;
                                 case 4:
@@ -289,5 +466,6 @@ public class Main {
                 System.out.println("✗ Error: " + e.getMessage());
             }
         }
+        scanner.close();
     }
 }

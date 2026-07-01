@@ -10,6 +10,6 @@ public class LoteFactory {
     public static Lote crear(String idLote, String numeroLote, Producto producto,
                              int cantidad, String ubicacion) {
         return new Lote(idLote, numeroLote, producto, cantidad,
-                LocalDate.now(), ubicacion);
+                LocalDate.now(), ubicacion, "ACTIVO");
     }
 }

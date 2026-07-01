@@ -1,10 +1,10 @@
 package controller;
 
 // Corregido: Paquetes en minúsculas por convención de Java (model en lugar de Model)
-import model.entidades.ReporteCalidad;
-import model.entidades.ReporteDespachos;
-import model.entidades.ReporteInventario;
-import model.servicios.ReporteService;
+import Model.entidades.ReporteCalidad;
+import Model.entidades.ReporteDespachos;
+import Model.entidades.ReporteInventario;
+import Model.servicios.ReporteService;
 
 public class ReporteController {
 

@@ -58,9 +58,7 @@ public class LoteBuilder {
     }
 
     public Lote build() {
-        Lote lote = new Lote(idLote, numeroLote, producto,
-                cantidad, fechaIngreso, ubicacion);
-        lote.setEstado(estado);
-        return lote;
+        return new Lote(idLote, numeroLote, producto,
+                cantidad, fechaIngreso, ubicacion, estado);
     }
 }

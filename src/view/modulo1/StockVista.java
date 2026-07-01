@@ -69,4 +69,22 @@ public class StockVista {
     public void mostrarError(String mensaje) {
         System.out.println("✗ Error: " + mensaje);
     }
+
+    public String[] pedirDatosStock() {
+        String[] datos = new String[4];
+
+        System.out.print("ID Stock: ");
+        datos[0] = scanner.nextLine();
+
+        System.out.print("ID Lote: ");
+        datos[1] = scanner.nextLine();
+
+        System.out.print("Cantidad disponible: ");
+        datos[2] = scanner.nextLine();
+
+        System.out.print("Cantidad minima: ");
+        datos[3] = scanner.nextLine();
+
+        return datos;
+    }
 }

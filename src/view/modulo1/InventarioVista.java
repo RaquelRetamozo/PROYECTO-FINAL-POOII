@@ -43,8 +43,15 @@ public class InventarioVista {
         String cantidad = scanner.nextLine();
         System.out.print("Dosis: ");
         String dosis = scanner.nextLine();
-        System.out.print("Parametro extra (viscosidad/humedad): ");
-        String param = scanner.nextLine();
+
+        String param;
+        if (tipo.trim().equalsIgnoreCase("LIQUIDO")) {
+            System.out.print("Viscosidad en cP (numero): ");
+        } else {
+            System.out.print("Humedad maxima en % (numero): ");
+        }
+        param = scanner.nextLine();
+
         return new String[]{id, nombre, tipo, fechaFab, fechaVen, cantidad, dosis, param};
     }
 
